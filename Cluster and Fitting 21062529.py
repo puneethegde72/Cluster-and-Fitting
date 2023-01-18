@@ -42,3 +42,11 @@ GDP_capita_c, GDP_capita_y = dataFrame("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417
                                      countries, "Indicator Name", "GDP per capita (current US$)")
 print(GDP_capita_c)
 print(GDP_capita_y)
+
+wcss = []
+df1=GDP_capita_c.iloc[:,1:]
+for i in range(1, 10):
+    kmeans = KMeans(n_clusters = i, init = 'k-means++', max_iter = 500, n_init = 20, random_state = 0)
+    kmeans.fit(df1)
+    wcss.append(kmeans.inertia_)
+print(wcss)
