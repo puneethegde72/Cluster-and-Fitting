@@ -149,7 +149,7 @@ school_c, school_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
 school_y['years'] = school_y.index
 
 #Ploting the data of the indian school enrolment for primar and secondary
-school_y.plot(y='India',use_index=True)
+school_y.plot(y='India',use_index=True, figsize=(13, 7), title='education enrolment of pupils', xlabel='Years', ylabel= 'N')
 
 def exponential(t, n0, g):
     """Calculates exponential function with scale factor n0 and growth rate g."""
