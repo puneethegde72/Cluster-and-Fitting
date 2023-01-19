@@ -11,6 +11,7 @@ import scipy as sts
 from sklearn.cluster import KMeans
 import seaborn as sns
 from sklearn import preprocessing
+from scipy.optimize import opt
 
 """Reading manipulating file with country name
 and returning a dataframe and transpose of the dataframe as return"""
@@ -26,11 +27,11 @@ def dataFrame(file_name, col, value1,countries):
     #Storing the column data in a variable
     a = df1['Country Name']
     # cropping the data from dataframe
-    df1 = df1.iloc[countries,2:]
+    df1 = df1.iloc[countries,3:]
     df1 = df1.drop(columns=['Indicator Name', 'Indicator Code'])
     df1.insert(loc=0, column='Country Name', value=a)
     #Dropping the NAN values from dataframe Column wise
-    df1= df1.dropna(axis = 0)
+    df1= df1.dropna(axis = 1)
     #transposing the index of the dataframe
     df2 = df1.set_index('Country Name').T
     #returning the normal dataframe and transposed dataframe
@@ -96,3 +97,26 @@ plt.ylabel('GDP per year')
 plt.show()
 
 
+'''calling dataFrame functions for all the dataframe which will be used for visualization'''
+school_c, school_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
+                                       "Indicator Name", "School enrollment, primary and secondary (gross), gender parity index (GPI)",countries)
+school_y['years'] = school_y.index
+
+
+school_y.plot(y='India',use_index=True)
+
+def exponential(t, n0, g):
+    """Calculates exponential function with scale factor n0 and growth rate g."""
+    t = t - 1960.0
+    f = n0 * np.exp(g*t)
+    return f
+
+print(type(school_y["years"].iloc[1]))
+school_y["years"] = pd.to_numeric(school_y["years"])
+print(type(school_y["years"].iloc[1]))
+param, covar = opt.curve_fit(exponential, school_y["years"], school_y["India"],
+p0=(73233967692.102798, 0.03))
+
+school_y["fit"] = exponential(school_y["years"], *param)
+school_y.plot("years", ["India", "fit"])
+plt.show()
