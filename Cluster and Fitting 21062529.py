@@ -138,3 +138,34 @@ school_y.plot("years", ["India", "fit"])
 plt.show()
 
 print(school_y)
+
+'''function for logistic fit which will be used for prediction'''
+def logistic(t, n0, g, t0):
+    """Calculates the logistic function with scale factor n0 and growth rate g"""
+    f = n0 / (1 + np.exp(-g*(t - t0)))
+    return f
+
+param, covar = opt.curve_fit(logistic, school_y["years"], school_y["India"],
+                             p0=(3e12, 0.03, 2000.0), maxfev=5000)
+
+sigma = np.sqrt(np.diag(covar))
+igma = np.sqrt(np.diag(covar))
+print("parameters:", param)
+print("std. dev.", sigma)
+school_y["logistic function fit"] = logistic(school_y["India"], *param)
+school_y.plot("years", ["India", "fit"])
+plt.show()
+
+#predicting years
+year = np.arange(1960, 2035)
+print(year)
+forecast = logistic(year, *param)
+
+'''Predicting the values with plot'''
+plt.figure()
+plt.plot(school_y["years"], school_y["India"], label="School enrollment")
+plt.plot(year, forecast, label="forecast")
+plt.xlabel("year")
+plt.ylabel("Indian education")
+plt.legend()
+plt.show()
