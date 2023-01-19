@@ -11,7 +11,7 @@ import scipy as sts
 from sklearn.cluster import KMeans
 import seaborn as sns
 from sklearn import preprocessing
-import scipy.optimize as opt
+import scipy.optimize as opts
 
 """Reading manipulating file with country name
 and returning a dataframe and transpose of the dataframe as return"""
