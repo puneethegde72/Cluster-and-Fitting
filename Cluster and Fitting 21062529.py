@@ -64,8 +64,9 @@ def normalizing(value):
     #Storing values in dataframe named data
     data = pd.DataFrame(x_scaled)
     return data
-#caling normalization function
 
+
+#caling normalization function
 normalized_df = normalizing(x)
 print(normalized_df)
 
@@ -78,6 +79,8 @@ def n_cluster(dataFrame,n):
         kmeans.fit(dataFrame)
         wcss.append(kmeans.inertia_)
     return wcss
+
+
 
 k = n_cluster(normalized_df,10)
 print(k)
@@ -139,6 +142,7 @@ def exponential(t, n0, g):
     f = n0 * np.exp(g*t)
     return f
 
+
 print(type(school_y["years"].iloc[1]))
 school_y["years"] = pd.to_numeric(school_y["years"])
 print(type(school_y["years"].iloc[1]))
@@ -159,6 +163,8 @@ def logistic(t, n0, g, t0):
     """Calculates the logistic function with scale factor n0 and growth rate g"""
     f = n0 / (1 + np.exp(-g*(t - t0)))
     return f
+
+
 #fitting logistic fit
 param, covar = opt.curve_fit(logistic, school_y["years"], school_y["India"],
                              p0=(3e12, 0.03, 2000.0), maxfev=5000)
