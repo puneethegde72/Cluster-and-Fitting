@@ -9,10 +9,12 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import scipy as sts
 from sklearn.cluster import KMeans
+import seaborn as sns
+from sklearn import preprocessing
 
 """Reading manipulating file with country name
 and returning a dataframe and transpose of the dataframe as return"""
-def dataFrame(file_name, years, countries, col, value1):
+def dataFrame(file_name, col, value1,countries):
     # Reading Data for dataframe
     df = pd.read_csv(file_name, skiprows = 4)
     # Grouping data with col value
@@ -24,29 +26,50 @@ def dataFrame(file_name, years, countries, col, value1):
     #Storing the column data in a variable
     a = df1['Country Name']
     # cropping the data from dataframe
-    df1 = df1.iloc[countries, years:]
+    df1 = df1.iloc[countries,2:]
+    df1 = df1.drop(columns=['Indicator Name', 'Indicator Code'])
     df1.insert(loc=0, column='Country Name', value=a)
     #Dropping the NAN values from dataframe Column wise
-    df1= df1.dropna(axis = 1)
+    df1= df1.dropna(axis = 0)
     #transposing the index of the dataframe
     df2 = df1.set_index('Country Name').T
     #returning the normal dataframe and transposed dataframe
     return df1, df2
-# years using for the data analysis
-years = 35
-# countries which are using for data analysis
-countries = [35, 40, 55, 81, 109, 119, 202, 205, 251]
 
+# years using for the data analysis
+
+# countries which are using for data analysis
+countries = [35, 55, 81, 109]
 '''calling dataFrame functions for all the dataframe which will be used for visualization'''
-GDP_capita_c, GDP_capita_y = dataFrame("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417.csv", years,
-                                     countries, "Indicator Name", "GDP per capita (current US$)")
+GDP_capita_c, GDP_capita_y = dataFrame("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417.csv",
+                                       "Indicator Name", "GDP per capita (current US$)",countries)
+
 print(GDP_capita_c)
+
+GDP_capita_y=GDP_capita_y.drop('Country Code',axis=0)
 print(GDP_capita_y)
 
+#returns a numpy array as x
+x = GDP_capita_y.values
+
+min_max_scaler = preprocessing.MinMaxScaler()
+x_scaled = min_max_scaler.fit_transform(x)
+normalized_df= pd.DataFrame(x_scaled)
+
+print(normalized_df)
+
 wcss = []
-df1=GDP_capita_c.iloc[:,1:]
 for i in range(1, 10):
-    kmeans = KMeans(n_clusters = i, init = 'k-means++', max_iter = 500, n_init = 20, random_state = 0)
-    kmeans.fit(df1)
+    kmeans = KMeans(n_clusters = i,init = 'k-means++', max_iter = 300, n_init = 10, random_state = 0)
+    kmeans.fit(normalized_df)
     wcss.append(kmeans.inertia_)
+
 print(wcss)
+
+plt.figure()
+plt.plot(range(1, 10), wcss)
+plt.title('The elbow method')
+plt.xlabel('Number of clusters')
+plt.ylabel('WCSS') #within cluster sum of squares
+plt.show()
+
