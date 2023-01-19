@@ -4,7 +4,8 @@ Created on Wed Jan 18 12:46:00 2023
 
 @author: Puneet
 """
-'''Importing all Required libraries'''
+'''Importing all Required libraries
+used sklear for Kmeans cluter and normalization of the data'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -39,7 +40,8 @@ def dataFrame(file_name, col, value1,countries):
 
 # countries which are using for data analysis
 countries = [35, 55, 81, 109]
-'''calling dataFrame functions for all the dataframe which will be used for K-Means'''
+'''calling dataFrame functions for all the dataframe which will be used for K-Means
+We have taken the Electric power consumption in the world bank dataset'''
 ele_con_c, ele_con_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
                                        "Indicator Name", "Electric power consumption (kWh per capita)",
                                        countries)
@@ -52,16 +54,23 @@ print(ele_con_y)
 #returns a numpy array as x
 x = ele_con_y.values
 
-'''Function to normalize the dataframe'''
+'''Function to normalize the dataframe
+i have used preprocessing MinMaxScaler'''
 def normalizing(value):
+    #storing normalization function to min_max_scaler
     min_max_scaler = preprocessing.MinMaxScaler()
+    #fitted the array data for normalization
     x_scaled = min_max_scaler.fit_transform(x)
+    #Storing values in dataframe named data
     data = pd.DataFrame(x_scaled)
     return data
+#caling normalization function
 
 normalized_df = normalizing(x)
 print(normalized_df)
-'''function to find the no of cluster needed by elbow method'''
+
+'''function to find the no of cluster needed by elbow method
+the elbow cluster will be used to find the no of clusters which needed to be created'''
 def n_cluster(dataFrame,n):
     wcss = []
     for i in range(1, n):
@@ -72,12 +81,13 @@ def n_cluster(dataFrame,n):
 
 k = n_cluster(normalized_df,10)
 print(k)
-'''Visualization of Elbow method'''
+'''Visualization of Elbow method
+where we will be picking the sutable no of clusters'''
 plt.figure()
 plt.plot(range(1, 10), k)
 plt.title('The elbow method')
 plt.xlabel('Number of clusters')
-plt.ylabel('WCSS') #within cluster sum of squares
+plt.ylabel('WCSS')
 plt.show()
 
 #finding k means cluster
@@ -90,7 +100,8 @@ lables = kmeans.fit_predict(normalized_df)
 centroids= kmeans.cluster_centers_
 print('centroids=',centroids)
 
-'''Ploting Kmeans clusters'''
+'''Ploting Kmeans clusters
+5 cluster has been plotted with the reference of the elbow method '''
 plt.figure()
 #Ploting cluster 1
 plt.scatter(normalized_df.values[lables == 0, 0], normalized_df.values[lables == 0, 1], s = 100, c = 'green', label = 'Cluster1')
@@ -113,7 +124,8 @@ plt.ylabel('GDP per year')
 plt.show()
 
 
-'''calling dataFrame functions for all the dataframe which will be used for curve fitting'''
+'''calling dataFrame functions for all the dataframe which will be used for curve fitting
+we have taken school enrollment of primal and secondary'''
 school_c, school_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
                                        "Indicator Name", "School enrollment, primary and secondary (gross), gender parity index (GPI)",countries)
 school_y['years'] = school_y.index
@@ -130,21 +142,24 @@ def exponential(t, n0, g):
 print(type(school_y["years"].iloc[1]))
 school_y["years"] = pd.to_numeric(school_y["years"])
 print(type(school_y["years"].iloc[1]))
+#calling exponential function
 param, covar = opt.curve_fit(exponential, school_y["years"], school_y["India"],
 p0=(73233967692.102798, 0.10))
 
 school_y["fit"] = exponential(school_y["years"], *param)
+
 school_y.plot("years", ["India", "fit"])
 plt.show()
 
 print(school_y)
 
-'''function for logistic fit which will be used for prediction'''
+'''function for logistic fit which will be used for prediction of students enrolled
+before and after the available years'''
 def logistic(t, n0, g, t0):
     """Calculates the logistic function with scale factor n0 and growth rate g"""
     f = n0 / (1 + np.exp(-g*(t - t0)))
     return f
-
+#fitting logistic fit
 param, covar = opt.curve_fit(logistic, school_y["years"], school_y["India"],
                              p0=(3e12, 0.03, 2000.0), maxfev=5000)
 
@@ -161,7 +176,7 @@ year = np.arange(1960, 2035)
 print(year)
 forecast = logistic(year, *param)
 
-'''Predicting the values with plot'''
+'''Visualizing  the values of the student enrolment from your 1960 to 2030 with plot'''
 plt.figure()
 plt.plot(school_y["years"], school_y["India"], label="School enrollment")
 plt.plot(year, forecast, label="forecast")
