@@ -121,7 +121,7 @@ plt.scatter(normalized_df.values[lables == 0, 0], normalized_df.values[lables ==
 #Ploting cluster 2
 plt.scatter(normalized_df.values[lables == 1, 0], normalized_df.values[lables == 1, 1], s = 100, c = 'orange', label = 'Cluster2')
 #Ploting cluster 3
-plt.scatter(normalized_df.values[lables == 2, 0], normalized_df.values[lables == 2, 1], s = 100, c = '#EE3A8C', label = 'Cluster3')
+plt.scatter(normalized_df.values[lables == 2, 0], normalized_df.values[lables == 2, 1], s = 100, c = '#EEC591', label = 'Cluster3')
 #Ploting cluster 4
 plt.scatter(normalized_df.values[lables == 3, 0], normalized_df.values[lables == 3, 1], s = 100, c = '#43CD80', label = 'Cluster4')
 #Ploting cluster 5
