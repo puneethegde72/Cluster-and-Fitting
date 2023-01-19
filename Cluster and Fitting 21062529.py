@@ -131,7 +131,7 @@ plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=100,
 
 plt.legend()
 # Title of the  plot
-plt.title('Clusters of GDP per Capita of 4 countries for year 1971 to 2014')
+plt.title('Clusters of GDP per Capita of 6 countries for year 1971 to 2014')
 plt.xlabel('Years')
 plt.ylabel('GDP per year')
 plt.show()
