@@ -148,6 +148,7 @@ plt.show()
 
 popu_c['lables']=lables
 print('dataframe with cluster lables', popu_c)
+popu_c.to_csv('total population data with cluster label.csv')
 
 '''
 calling dataFrame functions for all the dataframe which will be used for curve fitting
@@ -225,7 +226,7 @@ plt.plot(year, forecast, label="forecast")
 plt.xlabel("year")
 plt.ylabel("GDP/year")
 plt.legend()
-plt.title('prediction of GDP from 1960 to 2010')
+plt.title('Prediction of GDP from 1960 to 2010')
 plt.show()
 
 import err_ranges as err
