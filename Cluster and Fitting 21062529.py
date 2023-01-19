@@ -167,7 +167,7 @@ p0=(73233967692.102798, 0.10))
 
 school_y["fit"] = exponential(school_y["years"], *param)
 
-school_y.plot("years", ["India", "fit"])
+school_y.plot("years", ["India", "fit"], title='Data fitting with n0 * np.exp(g*t)')
 plt.show()
 
 print(school_y)
@@ -191,7 +191,7 @@ igma = np.sqrt(np.diag(covar))
 print("parameters:", param)
 print("std. dev.", sigma)
 school_y["logistic function fit"] = logistic(school_y["India"], *param)
-school_y.plot("years", ["India", "fit"])
+school_y.plot("years", ["India", "fit"], title='Data fitting with f = n0 / (1 + np.exp(-g*(t - t0)))')
 plt.show()
 
 #predicting years
@@ -208,4 +208,5 @@ plt.plot(year, forecast, label="forecast")
 plt.xlabel("year")
 plt.ylabel("Indian education")
 plt.legend()
+plt.title('prediction of enrolment from 1960 to 2030')
 plt.show()
