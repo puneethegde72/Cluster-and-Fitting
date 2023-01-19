@@ -11,7 +11,7 @@ import scipy as sts
 from sklearn.cluster import KMeans
 import seaborn as sns
 from sklearn import preprocessing
-from scipy.optimize import opt
+import scipy.optimize as opt
 
 """Reading manipulating file with country name
 and returning a dataframe and transpose of the dataframe as return"""
@@ -47,7 +47,7 @@ GDP_capita_c, GDP_capita_y = dataFrame("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417
 
 print(GDP_capita_c)
 
-GDP_capita_y=GDP_capita_y.drop('Country Code',axis=0)
+#GDP_capita_y=GDP_capita_y.drop('Country Code',axis=0)
 print(GDP_capita_y)
 
 #returns a numpy array as x
