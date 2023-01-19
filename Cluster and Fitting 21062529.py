@@ -4,8 +4,10 @@ Created on Wed Jan 18 12:46:00 2023
 
 @author: Puneet
 """
-'''Importing all Required libraries
-used sklear for Kmeans cluter and normalization of the data'''
+'''
+Importing all Required libraries
+used sklear for Kmeans cluter and normalization of the data
+'''
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -13,8 +15,10 @@ from sklearn.cluster import KMeans
 from sklearn import preprocessing
 import scipy.optimize as opt
 
-"""Reading manipulating file with country name
-and returning a dataframe and transpose of the dataframe as return"""
+"""
+Reading manipulating file with country name
+and returning a dataframe and transpose of the dataframe as return
+"""
 def dataFrame(file_name, col, value1,countries):
     # Reading Data for dataframe
     df = pd.read_csv(file_name, skiprows = 4)
