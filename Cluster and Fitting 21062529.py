@@ -70,8 +70,10 @@ def normalizing(value):
 normalized_df = normalizing(x)
 print(normalized_df)
 
-'''function to find the no of cluster needed by elbow method
-the elbow cluster will be used to find the no of clusters which needed to be created'''
+'''
+function to find the no of cluster needed by elbow method
+the elbow cluster will be used to find the no of clusters which needed to be created
+'''
 def n_cluster(dataFrame,n):
     wcss = []
     for i in range(1, n):
@@ -84,8 +86,10 @@ def n_cluster(dataFrame,n):
 
 k = n_cluster(normalized_df,10)
 print(k)
-'''Visualization of Elbow method
-where we will be picking the sutable no of clusters'''
+'''
+Visualization of Elbow method
+where we will be picking the sutable no of clusters
+'''
 plt.figure()
 plt.plot(range(1, 10), k)
 plt.title('The elbow method')
@@ -103,8 +107,10 @@ lables = kmeans.fit_predict(normalized_df)
 centroids= kmeans.cluster_centers_
 print('centroids=',centroids)
 
-'''Ploting Kmeans clusters
-5 cluster has been plotted with the reference of the elbow method '''
+'''
+Ploting Kmeans clusters
+5 cluster has been plotted with the reference of the elbow method
+'''
 plt.figure()
 #Ploting cluster 1
 plt.scatter(normalized_df.values[lables == 0, 0], normalized_df.values[lables == 0, 1], s = 100, c = 'green', label = 'Cluster1')
@@ -127,8 +133,10 @@ plt.ylabel('GDP per year')
 plt.show()
 
 
-'''calling dataFrame functions for all the dataframe which will be used for curve fitting
-we have taken school enrollment of primal and secondary'''
+'''
+calling dataFrame functions for all the dataframe which will be used for curve fitting
+we have taken school enrollment of primal and secondary
+'''
 school_c, school_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
                                        "Indicator Name", "School enrollment, primary and secondary (gross), gender parity index (GPI)",countries)
 school_y['years'] = school_y.index
@@ -157,8 +165,10 @@ plt.show()
 
 print(school_y)
 
-'''function for logistic fit which will be used for prediction of students enrolled
-before and after the available years'''
+'''
+function for logistic fit which will be used for prediction of students enrolled
+before and after the available years
+'''
 def logistic(t, n0, g, t0):
     """Calculates the logistic function with scale factor n0 and growth rate g"""
     f = n0 / (1 + np.exp(-g*(t - t0)))
@@ -182,7 +192,9 @@ year = np.arange(1960, 2035)
 print(year)
 forecast = logistic(year, *param)
 
-'''Visualizing  the values of the student enrolment from your 1960 to 2030 with plot'''
+'''
+Visualizing  the values of the student enrolment from your 1960 to 2030 with plot
+'''
 plt.figure()
 plt.plot(school_y["years"], school_y["India"], label="School enrollment")
 plt.plot(year, forecast, label="forecast")
