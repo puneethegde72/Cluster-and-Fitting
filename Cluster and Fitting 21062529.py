@@ -228,3 +228,14 @@ plt.legend()
 plt.title('prediction of GDP from 1960 to 2010')
 plt.show()
 
+import err_ranges as err
+low, up = err.err_ranges(year, logistic, param, sigma)
+
+plt.figure()
+plt.plot(gdp_y["years"], gdp_y["mean"], label="GDP")
+plt.plot(year, forecast, label="forecast")
+plt.fill_between(year, low, up, color="yellow", alpha=0.7)
+plt.xlabel("year")
+plt.ylabel("GDP")
+plt.legend()
+plt.show()
