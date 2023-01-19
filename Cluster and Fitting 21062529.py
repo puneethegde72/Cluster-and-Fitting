@@ -42,16 +42,17 @@ def dataFrame(file_name, col, value1,countries):
 # countries which are using for data analysis
 countries = [35, 55, 81, 109]
 '''calling dataFrame functions for all the dataframe which will be used for visualization'''
-GDP_capita_c, GDP_capita_y = dataFrame("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4770417.csv",
-                                       "Indicator Name", "GDP per capita (current US$)",countries)
+ele_con_c, ele_con_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
+                                       "Indicator Name", "Electric power consumption (kWh per capita)",
+                                       countries)
 
-print(GDP_capita_c)
+print(ele_con_c,)
 
 #GDP_capita_y=GDP_capita_y.drop('Country Code',axis=0)
-print(GDP_capita_y)
+print(ele_con_y)
 
 #returns a numpy array as x
-x = GDP_capita_y.values
+x = ele_con_y.values
 
 min_max_scaler = preprocessing.MinMaxScaler()
 x_scaled = min_max_scaler.fit_transform(x)
