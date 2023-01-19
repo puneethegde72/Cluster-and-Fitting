@@ -11,9 +11,7 @@ used sklear for Kmeans cluter and normalization of the data
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import scipy as sts
 from sklearn.cluster import KMeans
-import seaborn as sns
 from sklearn import preprocessing
 import scipy.optimize as opt
 
