@@ -43,7 +43,7 @@ def dataFrame(file_name, col, value1,countries):
 
 
 # countries which are using for data analysis
-countries = [35, 55, 81, 109]
+countries = [35,40,55,81,109,119]
 '''calling dataFrame functions for all the dataframe which will be used for K-Means
 We have taken the Electric power consumption in the world bank dataset'''
 ele_con_c, ele_con_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
@@ -136,11 +136,14 @@ plt.xlabel('Years')
 plt.ylabel('GDP per year')
 plt.show()
 
+ele_con_y['lables']=lables
+print('dataframe with cluster lables', ele_con_y)
 
 '''
 calling dataFrame functions for all the dataframe which will be used for curve fitting
 we have taken school enrollment of primal and secondary
 '''
+countries = [35,40,55,81,109]
 school_c, school_y = dataFrame("API_19_DS2_en_csv_v2_4700503.csv",
                                        "Indicator Name", "School enrollment, primary and secondary (gross), gender parity index (GPI)",countries)
 school_y['years'] = school_y.index
