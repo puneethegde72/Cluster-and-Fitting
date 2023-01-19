@@ -73,3 +73,25 @@ plt.xlabel('Number of clusters')
 plt.ylabel('WCSS') #within cluster sum of squares
 plt.show()
 
+kmeans = KMeans(n_clusters = 3, init = 'k-means++', max_iter = 100, n_init = 10, random_state = 0)
+y_kmeans = kmeans.fit_predict(normalized_df)
+
+print(y_kmeans)
+
+lables = kmeans.fit_predict(normalized_df)
+centroids= kmeans.cluster_centers_
+
+print('centroids=',centroids)
+
+
+plt.figure()
+plt.scatter(normalized_df.values[y_kmeans == 0, 0], normalized_df.values[y_kmeans == 0, 1], s = 100, c = 'green', label = 'Cluster1')
+plt.scatter(normalized_df.values[lables == 1, 0], normalized_df.values[lables == 1, 1], s = 100, c = 'orange', label = 'Cluster2')
+plt.scatter(normalized_df.values[lables == 2, 0], normalized_df.values[lables == 2, 1], s = 100, c = 'purple', label = 'Cluster3')
+plt.scatter(kmeans.cluster_centers_[:, 0], kmeans.cluster_centers_[:, 1], s=100, c='red', label = 'Centroids')
+plt.legend()
+plt.title('Clusters of GDP per Capita of 3 countries')
+plt.xlabel('Years')
+plt.ylabel('GDP per year')
+plt.show()
+
